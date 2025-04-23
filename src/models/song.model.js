@@ -1,27 +1,34 @@
 import mongoose, {Schema} from "mongoose";
 
-const SongSchema = new Schema({
+const songSchema = new Schema({
   title: {
     type: String,
-    required: true
-},
+    required: [true, "Song title is required"]
+  },
   artist: {
     type: String,
-    required: true
-},
-  album: {
-    type: String,
-},
+    required: [true, "Artist name is required"]
+  },
   genre: {
-    type: String,
+    type: String
+  },
+  coverImage: {
+    type: String, // URL or local path
     required: true
-},
-  audioUrl: {
-    type: String,
+  },
+  audioFile: {
+    type: String, // URL or local path
     required: true
-},
-  coverImageUrl: {
-    type: String,
-},
+  },
+  uploadedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  uploadedAt: {
+    type: Date,
+    default: Date.now
+  }
 },{timestamps: true});
-export const song = mongoose.model("Song", SongSchema);
+
+export const Song = mongoose.model("Song", songSchema);
